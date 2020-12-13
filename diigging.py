@@ -1,5 +1,8 @@
 import requests
 from decouple import config
+import os
+import os.path
+import json
 
 # Pulls from .env
 API_AUTHORIZATION_HEADER = config('AUTHORIZATION')
@@ -25,8 +28,7 @@ def query_basic():
     )
 
     json_response = response.json()
-    print(json_response)
-
+    save_diigo(json_response)
 
 
 # Query Through Multiple Pages
@@ -56,7 +58,7 @@ def query_multiple_pages():
 
 # Query Through All Pages
 def query_all_pages():
-    counter_per_page = 10
+    counter_per_page = 100
     filter_options = 'all'
     page_number = 1
     response_404 = 0
@@ -76,20 +78,25 @@ def query_all_pages():
         )
 
         json_response = all_response.json()
-        print(json_response)
+        # print(json_response)
+        save_diigo(json_response)
         page_number +=1
         if all_response.status_code == 404:
             response_404 = 404
 
         # For testing, to avoid actually pulling all pages
         # if page_number == 3:
-        #     break
+        #    break
 
-# Uncomment line below to run basic_query
-# query_basic()
+# Save Diigo data to JSON file.
+def save_diigo(json_response):
+    file = "diigo.json"
+    select_path = ""
 
-# Uncomment line below to run query_multiple_pages
+    with open(os.path.join(select_path, file), 'a+', encoding='utf-8', errors="replace") as outfile:
+        json.dump(json_response, outfile, sort_keys=False, indent=4)
+
+# Uncomment desired query below.
+query_basic()
 # query_multiple_pages()
-
-# Uncomment line below to run query_all_pages
-query_all_pages() 
+# query_all_pages() 
