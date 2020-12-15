@@ -33,19 +33,19 @@ def query_basic():
 
 # Query Through Multiple Pages
 def query_multiple_pages():
-    max_page_number = 10
-    counter_per_page = 10
+    max_bookmarks = 100
+    bookmarks_per_page = 10
     filter_options = 'all'
-    page_number = 1
-    while page_number <= max_page_number:
+    bookmark_number = 1
+    while bookmark_number <= max_bookmarks:
         multiple_response = requests.get(
             request_url,
             params={
                 'key': API_KEY,
                 'user': API_USER,
-                'count': counter_per_page,
+                'count': bookmarks_per_page,
                 'filter': filter_options,
-                'start': page_number,
+                'start': bookmark_number,
             },
             headers={
                 'Authorization': API_AUTHORIZATION_HEADER,
@@ -54,11 +54,11 @@ def query_multiple_pages():
 
         json_response = multiple_response.json()
         print(json_response)
-        page_number +=1
+        bookmark_number +=10
 
 # Query Through All Pages
 def query_all_pages():
-    counter_per_page = 100
+    bookmarks_per_page = 100
     filter_options = 'all'
     bookmark_number = 1
     response_404 = 0
@@ -68,7 +68,7 @@ def query_all_pages():
             params={
                 'key': API_KEY,
                 'user': API_USER,
-                'count': counter_per_page,
+                'count': bookmarks_per_page,
                 'filter': filter_options,
                 'start': bookmark_number,
             },
