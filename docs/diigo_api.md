@@ -1,9 +1,15 @@
 # The Diigo API
 
-The Diigo API is pretty basic, its [documentation is contained on one brief page](diigoapi). This document reiterates much of what is covered there and hopefully a few other helpful additions.
+## Introduction
+The Diigo API is barebones and [all of its documentation](diigoapi) is contained on one brief page. This unofficial document seeks to augment and correct the information in the official API documentation.
 
-# Fields Returned by API
-Each bookmark is returned in the following format:
+## API Response
+The Diigo API responds to valid queries with an array of bookmarks. An example bookmark (returned as an object) is shown below:
+
+NOTE: The response from the API is almost inverted compared to that in the official docs.
+
+NOTE: The comments/annotations associated with an individual bookmark are returned as an array.
+
 ```json
 [
     {
@@ -35,11 +41,22 @@ Each bookmark is returned in the following format:
 ]
 ```
 
-Notes:
-- Bookmarks are stored as objects and comments/annotations are stored as arrays.
-- Comments occur both at the level of the bookmark as well as individual annotations.
-- I'm unclear on what the `"desc"` field contains, it seems like it could be page meta, but sometimes is nonsensical, urls, etc.
-- Does `"shared"` mean public? I assume so at the moment.
+## API Field Meanings
+- `readlater`: yes/no
+- `tags`: for the bookmark, returned as a comma delimited string
+- `comments`: on the bookmark level
+- `user`: the user who saved the bookmark
+- `annotations`: individual highlights and comments associated with the bookmark.
+    - `content`: the highlighted text
+    - `comments`: comments on this specific annotation
+    - `user`: the user who created the annotation
+    - `created_at`: time stamp
+- `url`: the location of the bookmark
+- `shared`: yes/no - whether the bookmark is public or private
+- `created_at`: time stamp
+- `desc`: Description entered by user
+- `updated_at`: time stamp
+- `title`: title of page, can be customized by user
 
 
 [diigoapi]https://www.diigo.com/api_dev
