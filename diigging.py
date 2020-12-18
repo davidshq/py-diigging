@@ -79,9 +79,13 @@ def query_all_pages():
 
         json_response = all_response.json()
         # print(json_response)
+        print(all_response.json())
         save_diigo(json_response)
         bookmark_number +=100
         if all_response.status_code == 404:
+            response_404 = 404
+
+        if all_response.json() == []:
             response_404 = 404
 
         # For testing, to avoid actually pulling all pages
